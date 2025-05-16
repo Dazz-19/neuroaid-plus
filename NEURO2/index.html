@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NeuroAid+ | Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="/image-removebg-preview (1).png" alt="NeuroAid+ Logo">
+    <h1>NeuroAid+</h1>
+  </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contribute.html">Contribute</a>
+    <a href="contact.html">Contact</a>
+    <button onclick="connectToArduino()">🔌 </button>
+  </nav>
+</header>
+
+<main class="dashboard">
+  <section class="left-panel">
+    <h3>🧠 Add or Choose Phrases</h3>
+    <div class="input-row">
+      <input type="text" id="phraseInput" placeholder="Type phrase or number" />
+      <input type="number" id="buttonInput" placeholder="Button #" min="1" max="9" />
+      <button id="addBtn">➕ Add</button>
+    </div>
+
+    <h4>✔ Added Phrases</h4>
+    <ul id="phraseList" class="phrase-list"></ul>
+
+    <hr/>
+    <h4>💭 Suggested phrases</h4>
+    <ul id="suggestedPhrases" class="suggested-list">
+  <li>
+    I need water 
+    <button class="suggest-btn" onclick="addSuggested('I need water', 1)">➕</button>
+  </li>
+  <li>
+    Call the doctor 
+    <button class="suggest-btn" onclick="addSuggested('Call the doctor', 2)">➕</button>
+  </li>
+  <li>
+    Thank you 
+    <button class="suggest-btn" onclick="addSuggested('Thank you', 3)">➕</button>
+  </li>
+</ul>
+
+  </section>
+
+  <section class="right-panel">
+    <div class="notifications">
+      <h4>🔔 Notifications</h4>
+      <ul id="notificationList">
+        <li>System ready</li>
+        <li>New phrase added</li>
+        <li>Vitals updated for Ravi</li>
+      </ul>
+    </div>
+
+    <div class="patients">
+      <h4>👤 Select Patient</h4>
+      <div id="patientList"></div>
+    </div>
+
+    <div id="patientDetails" class="patient-details hidden">
+      <h4>📄 Patient Info</h4>
+    </div>
+
+    <div class="schedule">
+      <h4>🕒 Patient Log / Schedule</h4>
+      <ul>
+        <li>9:00 AM - Medication</li>
+        <li>10:30 AM - Physiotherapy</li>
+        <li>12:00 PM - Vitals Check</li>
+        <li>3:00 PM - Speech Session</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<section class="impact">
+  <h3>🌍 Our Impact</h3>
+  <p>From children with speech delays to adults recovering from strokes, NeuroAid+ is changing lives by restoring independence and dignity through communication.</p>
+  <a href="contribute.html" class="cta secondary">Contribute Now</a>
+</section>
+
+<footer>
+  <p>© 2025 NeuroAid+. Built with 💙 by passionate students for accessibility and inclusion.</p>
+</footer>
+
+<script>
+  let port;
+  let writer;
+
+  async function connectToArduino() {
+    try {
+      port = await navigator.serial.requestPort();
+      await port.open({ baudRate: 9600 });
+      writer = port.writable.getWriter();
+      alert("✅ Connected to Arduino");
+    } catch (err) {
+      alert("❌ Failed to connect: " + err);
+    }
+  }
+
+  async function sendToArduino(command) {
+    if (!writer) {
+      alert("⚠️ Please connect to Arduino first.");
+      return;
+    }
+    const data = new TextEncoder().encode(command + "\n");
+    await writer.write(data);
+  }
+
+  // Add phrase to list and send to Arduino
+  document.getElementById("addBtn").addEventListener("click", async () => {
+    const phrase = document.getElementById("phraseInput").value.trim();
+    const buttonNum = document.getElementById("buttonInput").value.trim();
+
+    if (phrase && buttonNum) {
+      addPhraseToList(phrase, buttonNum);
+      await sendToArduino(`PLAY_${buttonNum}`);
+      document.getElementById("phraseInput").value = "";
+      document.getElementById("buttonInput").value = "";
+    } else {
+      alert("Please fill both phrase and button number");
+    }
+  });
+
+ function addPhraseToList(text, button = "") {
+  const list = document.getElementById("phraseList");
+  const li = document.createElement("li");
+
+  li.innerHTML = `
+    ${text}
+    <button class="remove-btn" onclick="this.parentElement.remove()">🗑</button>
+    <button class="suggest-btn" onclick="sendToArduino('${button ? `PLAY_${button}` : `SAY:${text}`}')">▶️</button>
+  `;
+  list.appendChild(li);
+}
+
+
+  // Suggested phrase handler
+  function addSuggested(text, button) {
+    addPhraseToList(text, button);
+    sendToArduino(`PLAY_${button}`);
+  }
+
+  
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="o_2Mk1xQutqc7jeYuCuUs";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+
+</script>
+
+</body>
+</html>
