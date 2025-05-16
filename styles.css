@@ -1,0 +1,259 @@
+/* === BASE STYLES === */
+body {
+  font-family: 'Fredoka', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f1fefc;
+  color: #003b4a;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+/* === HEADER === */
+header {
+  background: #00bfa6;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  height: 40px;
+  width: auto;
+}
+
+nav a {
+  margin-left: 1.5rem;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* === LEFT PANEL === */
+.left-panel {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.left-panel h3,
+.left-panel h4 {
+  color: #00bfa6;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.input-row input,
+.input-row button {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.input-row button {
+  background-color: #00bfa6;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.input-row button:hover {
+  background-color: #009c8a;
+}
+
+/* === ADDED PHRASES === */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.phrase-list li {
+  background: #e6fff9;
+  margin: 6px 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.phrase-list li button {
+  margin-left: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.remove-btn {
+  background-color: #ff5c5c;
+}
+
+.remove-btn:hover {
+  background-color: #cc0000;
+}
+
+.suggest-btn {
+  background-color: #00bfa6;
+}
+
+.suggest-btn:hover {
+  background-color: #009c8a;
+}
+
+/* === SUGGESTED PHRASES === */
+.suggested-list li {
+  background: #f0fcfa;
+  margin: 8px 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.suggested-list li button {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #00bfa6;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.suggested-list li button:hover {
+  background-color: #009c8a;
+}
+
+/* === RIGHT PANEL === */
+.right-panel {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.right-panel > div {
+  background: #f1fefc;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.right-panel h4 {
+  color: #00bfa6;
+  margin-bottom: 0.6rem;
+  font-size: 1.1rem;
+}
+
+#patientList button {
+  margin: 5px 6px 0 0;
+  padding: 8px 12px;
+  background-color: #00bfa6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+#patientList button:hover {
+  background-color: #009c8a;
+}
+
+.patient-details.hidden {
+  display: none;
+}
+
+.patient-details {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.notifications ul,
+.schedule ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.notifications li,
+.schedule li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+/* === CTA & IMPACT === */
+.cta {
+  display: inline-block;
+  background: #00bfa6;
+  color: white;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.cta:hover {
+  background: #009c8a;
+}
+
+.cta.secondary {
+  background: #004c4c;
+}
+
+.impact {
+  padding: 3rem 1rem;
+  text-align: center;
+  background: #e6fff9;
+}
+
+/* === FOOTER === */
+footer {
+  background: #003b4a;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
